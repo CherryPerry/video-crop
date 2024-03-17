@@ -4,16 +4,21 @@
 [![Version](https://img.shields.io/github/release/CherryPerry/VideoCrop.svg)](https://github.com/CherryPerry/VideoCrop/releases)
 [![License](https://img.shields.io/badge/license-WTFPL-green.svg)](https://github.com/CherryPerry/VideoCrop/blob/master/LICENSE)
 
-**UPDATE:** Actually, used approach is not the best one. Consider using [Surface](https://developer.android.com/reference/android/media/MediaCodec#using-an-output-surface) approach for both decoder and encoder. Doing it this way, you can get predictable result before crop, using sufrace for rendering video in UI, and after crop using surface for encode it. I created this project just to check, if it is possible to use `ByteBuffer`s instead. Also audio [does not work](https://github.com/CherryPerry/VideoCrop/issues/1) for some reason...
+## TLDR ##
 
-You can crop video to make it square and be less than 20 seconds in duration.
+Just use [Media3 Transformer](https://developer.android.com/media/implement/editing-app) library or [LiTr](https://github.com/linkedin/LiTr).
+This repo is just an exploration how to use raw MediaCodec APIs to do it manually and was created before these libraries were available.
+
+### About
+
+You can crop a video to make it square and be less than 20 seconds in duration.
 
 It uses [MediaCodec](https://developer.android.com/reference/android/media/MediaCodec) API for decoding and encoding video.
-Source video file is read by [MediaExtractor](https://developer.android.com/reference/android/media/MediaExtractor).
-Frame transformations are done with regular [Bitmap](https://developer.android.com/reference/android/graphics/Bitmap).
-To be able to do so, it is required to convert frame's pixel array from YUV to RGB and back
+A source video file is read by [MediaExtractor](https://developer.android.com/reference/android/media/MediaExtractor).
+Frame transformations are done with a regular [Bitmap](https://developer.android.com/reference/android/graphics/Bitmap).
+To be able to do so, it is required to convert frames pixel array from YUV to RGB and back
 with help of [RenderScript](https://developer.android.com/guide/topics/renderscript/compute).
-Frames are saved to file with help of [MediaMuxer](https://developer.android.com/reference/android/media/MediaMuxer) after encoding.
+The tranformed frames are saved to a file with help of [MediaMuxer](https://developer.android.com/reference/android/media/MediaMuxer).
 
 #### Screenshots
 
